@@ -1,195 +1,35 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Car fuse layout finder for Tesla and Ford vehicles. Select year, make, and model to view fuse diagrams.">
-  <title>Car Fuse Layout Finder</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    #results { display: none; margin-top: 20px; }
-    #fuseGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
-    #fuseGrid div { border: 1px solid #000; padding: 5px; text-align: center; }
-    img { max-width: 100%; height: auto; }
+  <title>Car Fuse Finder</title>
+  <link rel="stylesheet" href="style.css"> <style>
+    body { font-family: sans-serif; padding: 20px; }
+    #fuseGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
+    #fuseGrid div { border: 1px solid #ccc; padding: 10px; text-align: center; background: #f9f9f9; }
+    #results { display: none; }
+    img { max-width: 100%; border-radius: 8px; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Car Fuse Layout Finder</h1>
-    <p>Select your vehicle year, make, and model to view fuse information.</p>
-  </header>
 
-  <main>
-    <form>
-      <label for="yearSelect">Year:</label>
-      <select id="yearSelect">
-        <option value="">Select Year</option>
-      </select>
+  <h1>Car Fuse Layout Finder</h1>
+  
+  <select id="yearSelect"><option value="">Select Year</option></select>
+  <select id="makeSelect" disabled><option value="">Select Make</option></select>
+  <select id="modelSelect" disabled><option value="">Select Model</option></select>
 
-      <label for="makeSelect">Make:</label>
-      <select id="makeSelect" disabled>
-        <option value="">Select Make</option>
-      </select>
-
-      <label for="modelSelect">Model:</label>
-      <select id="modelSelect" disabled>
-        <option value="">Select Model</option>
-      </select>
-    </form>
-
-    <section id="results">
-      <h2>Fuse Information</h2>
-      <img id="carImage" src="" alt="Car fuse diagram">
-      <p id="fuseInfo"></p>
-      <div id="fuseGrid"></div>
-      <button id="pdfBtn">Download PDF</button>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Car Fuse Finder. All rights reserved.</p>
-  </footer>
-
-  <script ...
-  <footer>
-    <p>&copy; 2025 Car Fuse Finder</p>
-  </footer>
-
-  <script ...
-  <footer>
-    <p>&copy; 2025 Car Fuse Finder</p>
-  </footer>
+  <section id="results">
+    <h2 id="title">Fuse Information</h2>
+    <img id="carImage" src="">
+    <p id="fuseInfo"></p>
+    <div id="fuseGrid"></div>
+    <button id="pdfBtn">Download PDF</button>
+  </section>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   
-  <script src="script.js"></script> 
-</body>
-  <script>
-    
-  </script>
-</body>
-  <script>
-    // --- Your JavaScript (fixed) ---
-    const vehicles = {
-      2025: {
-        Tesla: ["Model S", "Model 3", "Model X", "Model Y"],
-        Ford: ["F-150", "Mustang", "Explorer"]
-      },
-      2024: {
-        Tesla: ["Model S", "Model 3"],
-        Ford: ["F-150", "Mustang"]
-      }
-    };
-
-    const fuseData = {
-      "Tesla_Model S": {
-        image: "https://via.placeholder.com/300x150?text=Tesla+Model+S",
-        info: "Main fuse layout for Tesla Model S.",
-        grid: ["F1","F2","F3","F4","F5","F6","F7","F8"]
-      },
-      "Ford_F-150": {
-        image: "https://via.placeholder.com/300x150?text=Ford+F-150",
-        info: "Main fuse layout for Ford F-150.",
-        grid: ["F1","F2","F3","F4","F5","F6","F7","F8"]
-      }
-    };
-
-    const yearSelect = document.getElementById("yearSelect");
-    const makeSelect = document.getElementById("makeSelect");
-    const modelSelect = document.getElementById("modelSelect");
-    const results = document.getElementById("results");
-    const carImage = document.getElementById("carImage");
-    const fuseInfo = document.getElementById("fuseInfo");
-    const fuseGrid = document.getElementById("fuseGrid");
-
-    // Populate year dropdown
-    Object.keys(vehicles).forEach(year => {
-      const option = document.createElement("option");
-      option.value = year;
-      option.textContent = year;
-      yearSelect.appendChild(option);
-    });
-
-    // Year change
-    yearSelect.addEventListener("change", () => {
-      makeSelect.innerHTML = '<option value="">Select Make</option>';
-      modelSelect.innerHTML = '<option value="">Select Model</option>';
-      modelSelect.disabled = true;
-
-      const selectedYear = yearSelect.value;
-      if (!selectedYear) {
-        makeSelect.disabled = true;
-        return;
-      }
-
-      Object.keys(vehicles[selectedYear]).forEach(make => {
-        const option = document.createElement("option");
-        option.value = make;
-        option.textContent = make;
-        makeSelect.appendChild(option);
-      });
-      makeSelect.disabled = false;
-    });
-
-    // Make change
-    makeSelect.addEventListener("change", () => {
-      modelSelect.innerHTML = '<option value="">Select Model</option>';
-      const selectedYear = yearSelect.value;
-      const selectedMake = makeSelect.value;
-      if (!selectedMake) {
-        modelSelect.disabled = true;
-        return;
-      }
-
-      vehicles[selectedYear][selectedMake].forEach(model => {
-        const option = document.createElement("option");
-        option.value = model;
-        option.textContent = model;
-        modelSelect.appendChild(option);
-      });
-      modelSelect.disabled = false;
-    });
-
-    // Model change
-    modelSelect.addEventListener("change", () => {
-      const make = makeSelect.value;
-      const model = modelSelect.value;
-      if (!model) {
-        results.style.display = "none";
-        return;
-      }
-
-      const key = `${make}_${model}`;
-      const data = fuseData[key] || {
-        image: "https://via.placeholder.com/300x150?text=No+Image",
-        info: "No fuse info available.",
-        grid: []
-      };
-
-      carImage.src = data.image;
-      carImage.alt = `${make} ${model} fuse diagram`;
-      fuseInfo.textContent = data.info;
-
-      fuseGrid.innerHTML = "";
-      data.grid.forEach(fuse => {
-        const div = document.createElement("div");
-        div.textContent = fuse;
-        fuseGrid.appendChild(div);
-      });
-
-      results.style.display = "block";
-    });
-
-    // PDF export
-    document.getElementById("pdfBtn").addEventListener("click", () => {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.text("Car Fuse Layout", 10, 10);
-      doc.text(`Make: ${makeSelect.value}`, 10, 20);
-      doc.text(`Model: ${modelSelect.value}`, 10, 30);
-      doc.text(fuseInfo.textContent, 10, 40);
-      doc.save("fuse-layout.pdf");
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
