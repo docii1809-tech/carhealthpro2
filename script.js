@@ -1,5 +1,5 @@
 // PASTE YOUR RAW GITHUB URL BETWEEN THE QUOTES BELOW
-const DATA_URL = "https://raw.githubusercontent.com/username/repo/main/vehicles.json";
+const DATA_URL = "https://raw.githubusercontent.com/docii1809-tech/carhealthpro2/refs/heads/main/Vehicles.json;
 
 let vehicleData = {};
 
