@@ -1,4 +1,4 @@
-// Replace this with YOUR actual Raw URL from GitHub
+// https://raw.githubusercontent.com/docii1809-tech/carhealthpro2/refs/heads/main/Vehicles.
 const DATA_URL = "https://raw.githubusercontent.com/username/repo/main/vehicles.json";
 
 let vehicleData = {};
