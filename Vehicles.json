@@ -1,0 +1,23 @@
+{
+  "2025": {
+    "Tesla": {
+      "Model S": {
+        "image": "https://via.placeholder.com/600x300?text=Tesla+Model+S",
+        "info": "Main fuse layout for Tesla Model S.",
+        "grid": ["F1", "F2", "F3", "F4"]
+      },
+      "Model 3": {
+        "image": "https://via.placeholder.com/600x300?text=Tesla+Model+3",
+        "info": "Main fuse layout for Tesla Model 3.",
+        "grid": ["A1", "A2", "B1", "B2"]
+      }
+    },
+    "Ford": {
+      "F-150": {
+        "image": "https://via.placeholder.com/600x300?text=Ford+F-150",
+        "info": "Main fuse layout for Ford F-150.",
+        "grid": ["P1", "P2", "P3", "P4"]
+      }
+    }
+  }
+}
